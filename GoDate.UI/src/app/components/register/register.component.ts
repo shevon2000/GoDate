@@ -1,6 +1,7 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ export class RegisterComponent {
   private accountService = inject(AccountService);
   //usersFromHomeComponent = input.required<any>();  // Parent to child communication, using signals
   cancelRegister = output<boolean>();               // Child to parent communication, using signals
+  private toastr = inject(ToastrService)
   model: any = {}
 
   register() {
@@ -20,7 +22,7 @@ export class RegisterComponent {
         console.log(response);
         this.cancel();
       },
-      error: error => console.error(error)
+      error: error => this.toastr.error(error.error)
     });
   }
 
