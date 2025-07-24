@@ -1,35 +1,34 @@
-﻿using GoDate.API.Data;
-using GoDate.API.Entities.Domain;
+﻿using AutoMapper;
+using GoDate.API.Entities.DTO;
+using GoDate.API.Repositories.UserRepo;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GoDate.API.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly ApplicationDbContext context;
+        private readonly IUserRepository repository;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(IUserRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            var users = await context.Users.ToListAsync();
+            var users = await repository.GetUsersAsync();
 
-            return users;
+            return Ok(users);
         }
 
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserDto>> GetUser(string username)
         {
-            var user = await context.Users.FindAsync(id);
+            var user = await repository.GetUserAsync(username);
+
             if (user == null) return NotFound();
 
             return user;

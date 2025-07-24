@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GoDate.API.Entities.DTO
+namespace GoDate.API.Entities.DTO.Auth
 {
     public class RegisterDto
     {

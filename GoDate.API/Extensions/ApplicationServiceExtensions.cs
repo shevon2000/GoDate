@@ -1,4 +1,5 @@
 ﻿using GoDate.API.Data;
+using GoDate.API.Repositories.UserRepo;
 using GoDate.API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,12 @@ namespace GoDate.API.Extensions
 
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             return services;
         }
     }
 }
+ 

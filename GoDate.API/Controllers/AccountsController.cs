@@ -2,7 +2,7 @@
 using System.Text;
 using GoDate.API.Data;
 using GoDate.API.Entities.Domain;
-using GoDate.API.Entities.DTO;
+using GoDate.API.Entities.DTO.Auth;
 using GoDate.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,34 +22,35 @@ namespace GoDate.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<ResponseDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.UserName))
             {
                 return BadRequest("Username is already taken");
             }
+            return Ok();
 
-            using var hmac = new HMACSHA512();
+            //using var hmac = new HMACSHA512();
 
-            var user = new User
-            {
-                UserName = registerDto.UserName.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-            };
+            //var user = new User
+            //{
+            //    UserName = registerDto.UserName.ToLower(),
+            //    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+            //    PasswordSalt = hmac.Key
+            //};
 
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
+            //await context.Users.AddAsync(user);
+            //await context.SaveChangesAsync();
 
-            return new UserDto
-            {
-                UserName = user.UserName,
-                Token = service.CreateToken(user)
-            };
+            //return new UserDto
+            //{
+            //    UserName = user.UserName,
+            //    Token = service.CreateToken(user)
+            //};
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<ResponseDto>> Login(LoginDto loginDto)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
@@ -71,7 +72,7 @@ namespace GoDate.API.Controllers
                 }
             }
 
-            return new UserDto
+            return new ResponseDto
             {
                 UserName = user.UserName,
                 Token = service.CreateToken(user)
