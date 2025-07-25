@@ -17,7 +17,7 @@ namespace GoDate.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             var users = await repository.GetUsersAsync();
 
@@ -25,7 +25,7 @@ namespace GoDate.API.Controllers
         }
 
         [HttpGet("{username}")]
-        public async Task<ActionResult<UserDto>> GetUser(string username)
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             var user = await repository.GetUserAsync(username);
 

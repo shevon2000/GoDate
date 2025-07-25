@@ -10,7 +10,7 @@ namespace GoDate.API.Repositories.UserRepo
         Task<IEnumerable<User>> GetAllAsync();
         Task<User?> GetByIdAsync(int id);
         Task<User?> GetByNameAsync(string username);
-        Task<IEnumerable<UserDto>> GetUsersAsync();
-        Task<UserDto?> GetUserAsync(string username);
+        Task<IEnumerable<MemberDto>> GetUsersAsync();
+        Task<MemberDto?> GetUserAsync(string username);
     }
 }

@@ -9,7 +9,7 @@ namespace GoDate.API.Mappings
     {
         public AutoMapperProfiles()
         {
-            CreateMap<UserDto, User>().ReverseMap()
+            CreateMap<MemberDto, User>().ReverseMap()
                 .ForMember(d => d.Age, o => o.MapFrom(s => s.DateOfBirth.CalculateAge()))                                
                 .ForMember(d => d.PhotoUrl, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain)!.Url));
                 // Customizes PhotoUrl property on the destination

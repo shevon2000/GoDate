@@ -1,0 +1,35 @@
+.card:hover img {
+    transform: scale(1.2,1.2);              /* Zoom in the image by scaling it to 120% */
+    transition-duration: 500ms;             /* Make the zoom effect take 500ms */
+    transition-timing-function: ease-out;   /* ease-out timing (starts fast and slows down) */
+}
+
+.card img {
+    transform: scale(1.0,1.0);              /* Make sure image is shown at normal size */
+    transition-duration: 500ms;             /* Set up a smooth transition of 500 milliseconds for transform changes */
+    transition-timing-function: ease-out;   
+}
+
+.card-img-wrapper {                         /* The container around the image */
+    overflow: hidden;                       /* Prevent image from overflowing when it scales (keeps it within bounds) */
+    position: relative;                     /* Position relative to allow absolute positioning of child elements */
+}   
+
+.member-icons {
+    position: absolute;                     /* Position the icons absolutely within the card */
+    bottom: -30%;                           /* Position the icons 30px below the bottom of the card */
+    left: 0;
+    right:0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 0;                             /* Start with icons hidden */
+}
+
+.card-img-wrapper:hover .member-icons {
+    bottom: 0;                              /* Move icons to the bottom of the card when hovering */
+    opacity: 0.7;                           /* Show icons when hovering over the image */
+}   
+
+.animate {
+    transition: all 0.3s ease-in-out;       /* Smooth transition for all properties */
+}

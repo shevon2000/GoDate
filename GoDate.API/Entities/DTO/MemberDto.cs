@@ -1,6 +1,6 @@
 ﻿namespace GoDate.API.Entities.DTO
 {
-    public class UserDto
+    public class MemberDto
     {
         public int Id { get; set; }
         public string? Username { get; set; }

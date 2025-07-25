@@ -22,7 +22,7 @@ namespace GoDate.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<ResponseDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.UserName))
             {
@@ -50,7 +50,7 @@ namespace GoDate.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<ResponseDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
@@ -72,7 +72,7 @@ namespace GoDate.API.Controllers
                 }
             }
 
-            return new ResponseDto
+            return new UserDto
             {
                 UserName = user.UserName,
                 Token = service.CreateToken(user)

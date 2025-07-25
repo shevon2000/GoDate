@@ -37,18 +37,18 @@ namespace GoDate.API.Repositories.UserRepo
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-        public async Task<UserDto?> GetUserAsync(string username)
+        public async Task<MemberDto?> GetUserAsync(string username)
         {
             return await context.Users
                 .Where(x => x.UserName == username)
-                .ProjectTo<UserDto>(mapper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<UserDto>> GetUsersAsync()
+        public async Task<IEnumerable<MemberDto>> GetUsersAsync()
         {
             return await context.Users
-                .ProjectTo<UserDto>(mapper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
