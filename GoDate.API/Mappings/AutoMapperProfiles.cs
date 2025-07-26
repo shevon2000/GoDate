@@ -15,6 +15,7 @@ namespace GoDate.API.Mappings
                 // Customizes PhotoUrl property on the destination
 
             CreateMap<PhotoDto, Photo>().ReverseMap();
+            CreateMap<MemberUpdateDto, User>();
         }
     }
 }
