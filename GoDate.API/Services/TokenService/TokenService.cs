@@ -4,7 +4,7 @@ using System.Text;
 using GoDate.API.Entities.Domain;
 using Microsoft.IdentityModel.Tokens;
 
-namespace GoDate.API.Services
+namespace GoDate.API.Services.TokenService
 {
     public class TokenService(IConfiguration config) : ITokenService  // IConfiguration for reading appsettings
     {

@@ -1,6 +1,8 @@
 ﻿using GoDate.API.Data;
+using GoDate.API.Helpers;
 using GoDate.API.Repositories.UserRepo;
-using GoDate.API.Services;
+using GoDate.API.Services.PhotoService;
+using GoDate.API.Services.TokenService;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoDate.API.Extensions
@@ -21,7 +23,11 @@ namespace GoDate.API.Extensions
 
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IPhotoService, PhotoService>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
             return services;
         }

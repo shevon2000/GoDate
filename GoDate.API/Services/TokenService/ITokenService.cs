@@ -1,6 +1,6 @@
 ﻿using GoDate.API.Entities.Domain;
 
-namespace GoDate.API.Services
+namespace GoDate.API.Services.TokenService
 {
     public interface ITokenService
     {

@@ -11,8 +11,9 @@ namespace GoDate.API.Mappings
         {
             CreateMap<MemberDto, User>().ReverseMap()
                 .ForMember(d => d.Age, o => o.MapFrom(s => s.DateOfBirth.CalculateAge()))                                
-                .ForMember(d => d.PhotoUrl, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain)!.Url));
+                .ForMember(d => d.PhotoUrl, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain)!.Url))
                 // Customizes PhotoUrl property on the destination
+                .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos));   // PhotoDto list is mapped
 
             CreateMap<PhotoDto, Photo>().ReverseMap();
             CreateMap<MemberUpdateDto, User>();

@@ -3,7 +3,7 @@ using System.Text;
 using GoDate.API.Data;
 using GoDate.API.Entities.Domain;
 using GoDate.API.Entities.DTO.Auth;
-using GoDate.API.Services;
+using GoDate.API.Services.TokenService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +53,9 @@ namespace GoDate.API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await context.Users
-                .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
+                .Include(p => p.Photos)
+                    .FirstOrDefaultAsync(x => 
+                        x.UserName == loginDto.UserName.ToLower());
 
             if (user == null)
             {
@@ -75,7 +77,8 @@ namespace GoDate.API.Controllers
             return new UserDto
             {
                 UserName = user.UserName,
-                Token = service.CreateToken(user)
+                Token = service.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url   // Navbar avatar
             };
         }
 
