@@ -75,6 +75,8 @@ namespace GoDate.API.Controllers
                 PublicId = result.PublicId
             };
 
+            if (user.Photos.Count == 0) photo.IsMain = true;    // Make the first photo as Main
+
             user.Photos.Add(photo);
 
             if (await repository.SaveAllAsync())

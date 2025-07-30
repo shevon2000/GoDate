@@ -5,9 +5,21 @@ namespace GoDate.API.Entities.DTO.Auth
     public class RegisterDto
     {
         [Required]
-        public required string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         [Required]
-        public required string Password { get; set; }
+        public string? KnownAs { get; set; }
+        [Required]
+        public string? Gender { get; set; }
+        [Required]
+        public string? DateOfBirth { get; set; }
+        [Required]
+        public string? City { get; set; }
+        [Required]
+        public string? Country { get; set; }
+
+        [Required]
+        [StringLength(8, MinimumLength = 4)]
+        public string Password { get; set; } = string.Empty;
     }
 }

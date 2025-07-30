@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using GoDate.API.Data;
 using GoDate.API.Entities.Domain;
 using GoDate.API.Entities.DTO.Auth;
@@ -14,11 +15,13 @@ namespace GoDate.API.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly ITokenService service;
+        private readonly IMapper mapper;
 
-        public AccountController(ApplicationDbContext context, ITokenService service)
+        public AccountController(ApplicationDbContext context, ITokenService service, IMapper mapper)
         {
             this.context = context;
             this.service = service;
+            this.mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -28,25 +31,25 @@ namespace GoDate.API.Controllers
             {
                 return BadRequest("Username is already taken");
             }
-            return Ok();
 
-            //using var hmac = new HMACSHA512();
+            using var hmac = new HMACSHA512();
 
-            //var user = new User
-            //{
-            //    UserName = registerDto.UserName.ToLower(),
-            //    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            //    PasswordSalt = hmac.Key
-            //};
+            var user = mapper.Map<User>(registerDto);
 
-            //await context.Users.AddAsync(user);
-            //await context.SaveChangesAsync();
+            user.UserName = registerDto.UserName.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
 
-            //return new UserDto
-            //{
-            //    UserName = user.UserName,
-            //    Token = service.CreateToken(user)
-            //};
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+
+            return new UserDto
+            {
+                UserName = user.UserName,
+                KnownAs = user.KnownAs,
+                Token = service.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+            };
         }
 
         [HttpPost("login")]
@@ -77,6 +80,7 @@ namespace GoDate.API.Controllers
             return new UserDto
             {
                 UserName = user.UserName,
+                KnownAs = user.KnownAs,
                 Token = service.CreateToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url   // Navbar avatar
             };

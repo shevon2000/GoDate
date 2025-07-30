@@ -43,3 +43,9 @@
   border-top: 1px solid #eee;
   padding: 15px 0;
 }
+
+/* Custom theme with purple for datepicker */
+.theme-default .bs-datepicker-head {
+  background-color: #7e57c2; 
+  color: white;
+}

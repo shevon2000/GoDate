@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GoDate.API.Entities.Domain;
 using GoDate.API.Entities.DTO;
+using GoDate.API.Entities.DTO.Auth;
 using GoDate.API.Extensions;
 
 namespace GoDate.API.Mappings
@@ -17,6 +18,8 @@ namespace GoDate.API.Mappings
 
             CreateMap<PhotoDto, Photo>().ReverseMap();
             CreateMap<MemberUpdateDto, User>();
+            CreateMap<RegisterDto, User>();
+            CreateMap<string, DateOnly>().ConvertUsing(s => DateOnly.Parse(s));    // Convert registerDto string date into DateOnly type
         }
     }
 }
